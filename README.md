@@ -1,0 +1,1 @@
+# wfswarm-booster-license-generator

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ ~ Copyright 2016-2017 Red Hat, Inc, and individual contributors. ~
+   ~ Licensed under the Apache License, Version 2.0 (the "License"); ~ you may
+   not use this file except in compliance with the License. ~ You may obtain
+   a copy of the License at ~ ~ http://www.apache.org/licenses/LICENSE-2.0 ~
+   ~ Unless required by applicable law or agreed to in writing, software ~ distributed
+   under the License is distributed on an "AS IS" BASIS, ~ WITHOUT WARRANTIES
+   OR CONDITIONS OF ANY KIND, either express or implied. ~ See the License for
+   the specific language governing permissions and ~ limitations under the License.
+   ~ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>org.wildfly.swarm</groupId>
+   <artifactId>wfswarm-booster-license-generator</artifactId>
+   <version>0.0.1-SNAPSHOT</version>
+   <packaging>pom</packaging>
+
+   <name>WildFly Swarm Booster License Generator</name>
+
+   <properties>
+      <version.wildfly.swarm.fraction.plugin>61</version.wildfly.swarm.fraction.plugin>
+      <version.xml-maven-plugin>1.0.1</version.xml-maven-plugin>
+      <version.license-maven-plugin>1.13</version.license-maven-plugin>
+      <version.wildfly-licenses-plugin>1.0.1</version.wildfly-licenses-plugin>
+      <booster.repo.url>https://repository.jboss.org/nexus/content/groups/public</booster.repo.url>
+      <booster.pom.file>pom.xml</booster.pom.file>
+      <booster.name>WildFly Swarm Booster</booster.name>
+      <booster.version>8-SNAPSHOT</booster.version>
+      <booster.assembly.name>${project.artifactId}</booster.assembly.name>
+   </properties>
+
+   <build>
+      <plugins>
+         <plugin>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>prepare-template</id>
+                  <phase>validate</phase>
+                  <goals>
+                     <goal>copy-resources</goal>
+                  </goals>
+                  <inherited>false</inherited>
+                  <configuration>
+                     <outputDirectory>${basedir}/target</outputDirectory>
+                     <resources>
+                        <resource>
+                           <directory>src/main/resources</directory>
+                           <filtering>true</filtering>
+                        </resource>
+                     </resources>
+                     <escapeString>\</escapeString>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+         <plugin>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>wildfly-swarm-fraction-plugin</artifactId>
+            <version>${version.wildfly.swarm.fraction.plugin}</version>
+            <executions>
+               <execution>
+                  <id>generate-licenses</id>
+                  <goals>
+                     <goal>generate-licenses</goal>
+                  </goals>
+                  <configuration>
+                     <licensesTemplate>${project.build.directory}/licenses/licenses-project-template.xml</licensesTemplate>
+                     <downloadSources>true</downloadSources>
+                     <downloadPoms>true</downloadPoms>
+                     <userSettings>${project.build.directory}/licenses/custom-settings.xml</userSettings>
+                     <pomFile>${booster.pom.file}</pomFile>
+                     <excludes>
+                        <exclude>org/codehaus/plexus/plexus/1.0.4/.*</exclude>
+                     </excludes>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <configuration>
+               <finalName>${booster.assembly.name}</finalName>
+               <descriptors>
+                  <descriptor>src/assembly/assembly.xml</descriptor>
+               </descriptors>
+            </configuration>
+            <executions>
+               <execution>
+                  <id>assemble</id>
+                  <phase>package</phase>
+                  <goals>
+                     <goal>single</goal>
+                  </goals>
+                  <configuration>
+                     <tarLongFileMode>gnu</tarLongFileMode>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+      </plugins>
+   </build>
+
+   <profiles>
+
+      <profile>
+         <id>booster.product</id>
+         <activation>
+            <property>
+               <name>booster.product.build</name>
+            </property>
+         </activation>
+         <properties>
+            <booster.repo.url>https://maven.repository.redhat.com/ga/</booster.repo.url>
+         </properties>
+      </profile>
+
+      <profile>
+         <id>wfswarm-rest-http-redhat</id>
+         <activation>
+            <property>
+               <name>booster.product.build</name>
+               <value>rest-http</value>
+            </property>
+         </activation>
+         <build>
+            <plugins>
+               <plugin>
+                  <groupId>org.wildfly.swarm</groupId>
+                  <artifactId>wildfly-swarm-fraction-plugin</artifactId>
+                  <executions>
+                     <execution>
+                        <id>generate-licenses</id>
+                        <goals>
+                           <goal>generate-licenses</goal>
+                        </goals>
+                        <configuration>
+                           <excludes>
+                              <exclude>org/wildfly/swarm/bootstrap/201.*</exclude>
+                           </excludes>
+                        </configuration>
+                     </execution>
+                  </executions>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+
+   </profiles>
+
+</project>
