@@ -19,7 +19,8 @@
    <name>WildFly Swarm Booster License Generator</name>
 
    <properties>
-      <version.wildfly.swarm.fraction.plugin>61</version.wildfly.swarm.fraction.plugin>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <version.wildfly.swarm.fraction.plugin>64</version.wildfly.swarm.fraction.plugin>
       <version.xml-maven-plugin>1.0.1</version.xml-maven-plugin>
       <version.license-maven-plugin>1.13</version.license-maven-plugin>
       <version.wildfly-licenses-plugin>1.0.1</version.wildfly-licenses-plugin>
