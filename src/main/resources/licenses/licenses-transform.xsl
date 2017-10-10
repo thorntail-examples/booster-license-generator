@@ -34,6 +34,9 @@
   <xsl:variable name="cddl_name" select="'Common Development and Distribution License (CDDL) and GNU Public License v.2 w/Classpath Exception'"/>
   <xsl:variable name="cddl_url" select="'https://netbeans.org/cddl-gplv2.html'"/>
 
+  <xsl:variable name="cddl10_name" select="'Common Development and Distribution License 1.0'"/>
+  <xsl:variable name="cddl10_url" select="'http://www.opensource.org/licenses/cddl1.html'"/>
+
   <xsl:variable name="edl_v1_name" select="'Eclipse Distribution License, Version 1.0'"/>
   <xsl:variable name="edl_v1_url" select="'https://eclipse.org/org/documents/edl-v10.html'"/>
 
@@ -57,7 +60,7 @@
       <xsl:when test="contains(comment(), 'No license information available.')">
         <xsl:choose>
           <!-- antlr -->
-          <xsl:when test="ancestor::dependency/groupId/text() = 'antlr'">
+          <xsl:when test="ancestor::dependency/groupId/text() = 'antlr' or ancestor::dependency/groupId/text() = 'org.antlr'">
             <licenses>
               <xsl:text>&#10;        </xsl:text>
               <xsl:call-template name="license">
@@ -67,7 +70,61 @@
               <xsl:text>&#10;      </xsl:text>
             </licenses>
           </xsl:when>
-
+          <!-- classworlds -->
+          <xsl:when test="ancestor::dependency/groupId/text() = 'classworlds' and ancestor::dependency/artifactId/text() = 'classworlds'">
+            <licenses>
+              <xsl:text>&#10;        </xsl:text>
+                <xsl:call-template name="license">
+                  <xsl:with-param name="name" select="$apache_v2_name"/>
+                  <xsl:with-param name="url" select="$apache_v2_url"/>
+                 </xsl:call-template>
+              <xsl:text>&#10;      </xsl:text>
+            </licenses>
+          </xsl:when>
+          <!-- javax.activation -->
+          <xsl:when test="ancestor::dependency/groupId/text() = 'javax.activation' and ancestor::dependency/artifactId/text() = 'activation'">
+            <licenses>
+              <xsl:text>&#10;        </xsl:text>
+                <xsl:call-template name="license">
+                  <xsl:with-param name="name" select="$cddl10_name"/>
+                  <xsl:with-param name="url" select="$cddl10_url"/>
+                </xsl:call-template>
+              <xsl:text>&#10;      </xsl:text>
+            </licenses>
+          </xsl:when>
+          <!-- org.codehaus.plexus -->
+          <xsl:when test="ancestor::dependency/groupId/text() = 'org.codehaus.plexus'">
+            <licenses>
+              <xsl:text>&#10;        </xsl:text>
+                <xsl:call-template name="license">
+                  <xsl:with-param name="name" select="$apache_v2_name"/>
+                  <xsl:with-param name="url" select="$apache_v2_url"/>
+                </xsl:call-template>
+              <xsl:text>&#10;      </xsl:text>
+            </licenses>
+          </xsl:when>
+          <!-- org.slf4j -->
+          <xsl:when test="ancestor::dependency/groupId/text() = 'org.slf4j'">
+            <licenses>
+              <xsl:text>&#10;        </xsl:text>
+                <xsl:call-template name="license">
+                  <xsl:with-param name="name" select="$mit_name"/>
+                  <xsl:with-param name="url" select="$mit_url"/>
+                </xsl:call-template>
+              <xsl:text>&#10;      </xsl:text>
+            </licenses>
+          </xsl:when>
+          <!-- org.sonatype.forge -->
+          <xsl:when test="ancestor::dependency/groupId/text() = 'org.sonatype.forge'">
+            <licenses>
+              <xsl:text>&#10;        </xsl:text>
+                <xsl:call-template name="license">
+                  <xsl:with-param name="name" select="$apache_v2_name"/>
+                  <xsl:with-param name="url" select="$apache_v2_url"/>
+                </xsl:call-template>
+              <xsl:text>&#10;      </xsl:text>
+            </licenses>
+          </xsl:when>
           <!-- If nothing matches, leave original values -->
           <xsl:otherwise>
             <licenses>
