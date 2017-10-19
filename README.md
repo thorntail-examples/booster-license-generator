@@ -16,6 +16,18 @@ Path to the booster `pom.xml`, e.g.:
 
 NOTE: The pom file is always copied to `target/generated-project/pom.xml`.
 
+## booster.project.dir
+
+Path to the booster project directory, e.g.:
+
+````bash
+-Dbooster.project.dir=/path/to/wfswarm-rest-http-secured
+````
+
+NOTE 1: The dir content is copied to `target/generated-project`. `src/test/` and `target` subdirs are skipped.
+
+NOTE 2: If specified, `booster.pom.file` property is ignored.
+
 ## booster.name
 
 The name used in licenses.html report, e.g.:

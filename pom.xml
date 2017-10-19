@@ -25,6 +25,7 @@
       <version.xml-maven-plugin>1.0.1</version.xml-maven-plugin>
       <version.license-maven-plugin>1.13</version.license-maven-plugin>
       <version.antrun-plugin>1.8</version.antrun-plugin>
+      <version.maven-resources-plugin>3.0.2</version.maven-resources-plugin>
       <version.wildfly-licenses-plugin>1.0.1</version.wildfly-licenses-plugin>
       <version.assembly-plugin>3.1.0</version.assembly-plugin>
       <!-- Build configuration -->
@@ -33,12 +34,15 @@
       <booster.name>WildFly Swarm Booster</booster.name>
       <booster.version>7.0.0-redhat-3</booster.version>
       <booster.assembly.name>wfswarm-booster-licenses</booster.assembly.name>
+      <booster.project.dir></booster.project.dir>
    </properties>
 
    <build>
       <plugins>
          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-resources-plugin</artifactId>
+            <version>${version.maven-resources-plugin}</version>
             <executions>
                <execution>
                   <id>prepare-template</id>
@@ -111,7 +115,30 @@
             <artifactId>maven-antrun-plugin</artifactId>
             <version>${version.antrun-plugin}</version>
             <executions>
-               <execution>
+                <execution>
+                  <id>copy-additional-resources</id>
+                  <phase>process-resources</phase>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+                  <configuration>
+                     <target>
+                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+                        <if>
+                            <length string="${booster.project.dir}" trim="true" when="greater" length="0" />
+                            <then>
+                                <copy toDir="${project.build.directory}/generated-project">
+                                    <fileset dir="${booster.project.dir}">
+                                        <exclude name="src/test/"/>
+                                        <exclude name="target/"/>
+                                    </fileset>
+                                </copy>
+                            </then>
+                        </if>
+                     </target>
+                  </configuration>
+                </execution>
+                <execution>
                   <id>log-info</id>
                   <phase>package</phase>
                   <goals>
@@ -119,11 +146,24 @@
                   </goals>
                   <configuration>
                      <tasks>
-                        <echo>=========================================================================${line.separator}WildFly Swarm Booster Licenses Generated${line.separator}booster.pom.file:      ${booster.pom.file}${line.separator}booster.repo.url:      ${booster.repo.url}${line.separator}booster.name:          ${booster.name}${line.separator}booster.version:       ${booster.version}${line.separator}booster.assembly.name: ${booster.assembly.name}${line.separator}Zip archive:           ${project.build.directory}/${booster.assembly.name}.zip${line.separator}License files:         ${project.build.directory}/license-project/target/licenses${line.separator}=========================================================================</echo>
+                        <echo>=========================================================================${line.separator}WildFly Swarm Booster Licenses Generated${line.separator}booster.pom.file:      ${booster.pom.file}${line.separator}booster.project.dir:   ${booster.project.dir}${line.separator}booster.repo.url:      ${booster.repo.url}${line.separator}booster.name:          ${booster.name}${line.separator}booster.version:       ${booster.version}${line.separator}booster.assembly.name: ${booster.assembly.name}${line.separator}Zip archive:           ${project.build.directory}/${booster.assembly.name}.zip${line.separator}License files:         ${project.build.directory}/license-project/target/licenses${line.separator}=========================================================================</echo>
                      </tasks>
                   </configuration>
-               </execution>
+                </execution>
             </executions>
+            <dependencies>
+                <dependency>
+                    <groupId>ant-contrib</groupId>
+                    <artifactId>ant-contrib</artifactId>
+                    <version>1.0b3</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>ant</groupId>
+                            <artifactId>ant</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>
          </plugin>
       </plugins>
    </build>
