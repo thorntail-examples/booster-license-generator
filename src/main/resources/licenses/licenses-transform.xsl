@@ -156,7 +156,7 @@
           <xsl:with-param name="url" select="$apache_v2_url"/>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="contains(url/text(), 'LICENSE.txt') and (contains(name/text(), 'The Apache Software License, Version 2.0') or contains(name/text(), 'Apache License Version 2.0'))">
+      <xsl:when test="contains(url/text(), 'LICENSE.txt') and (contains(name/text(), 'The Apache Software License, Version 2.0') or contains(name/text(), 'Apache License Version 2.0') or contains(name/text(), 'Apache 2.0'))">
         <xsl:call-template name="license">
           <xsl:with-param name="name" select="$apache_v2_name"/>
           <xsl:with-param name="url" select="$apache_v2_url"/>
@@ -296,6 +296,13 @@
         <xsl:call-template name="license">
           <xsl:with-param name="name" select="$apache_v2_name"/>
           <xsl:with-param name="url" select="$apache_v2_url"/>
+        </xsl:call-template>
+      </xsl:when>
+      <!-- findbugs -->
+      <xsl:when test="ancestor::dependency/groupId/text() = 'com.google.code.findbugs' and ancestor::dependency/artifactId/text() = 'annotations'">
+        <xsl:call-template name="license">
+          <xsl:with-param name="name" select="$lgpl_v30_name"/>
+          <xsl:with-param name="url" select="$lgpl_v30_url"/>
         </xsl:call-template>
       </xsl:when>
 
