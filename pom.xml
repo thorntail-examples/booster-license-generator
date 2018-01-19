@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- ~ ~ Copyright 2016-2017 Red Hat, Inc, and individual contributors. ~
+<?xml version="1.0" encoding="UTF-8"?><!-- ~ ~ Copyright 2016-2017 Red Hat, Inc, and individual contributors. ~
    ~ Licensed under the Apache License, Version 2.0 (the "License"); ~ you may
    not use this file except in compliance with the License. ~ You may obtain
    a copy of the License at ~ ~ http://www.apache.org/licenses/LICENSE-2.0 ~
@@ -7,9 +6,7 @@
    under the License is distributed on an "AS IS" BASIS, ~ WITHOUT WARRANTIES
    OR CONDITIONS OF ANY KIND, either express or implied. ~ See the License for
    the specific language governing permissions and ~ limitations under the License.
-   ~ -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   ~ --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
    <groupId>org.wildfly.swarm</groupId>
    <artifactId>wfswarm-booster-license-generator</artifactId>
@@ -34,7 +31,7 @@
       <booster.name>WildFly Swarm Booster</booster.name>
       <booster.version>7.0.0-redhat-3</booster.version>
       <booster.assembly.name>wfswarm-booster-licenses</booster.assembly.name>
-      <booster.project.dir></booster.project.dir>
+      <booster.project.dir/>
    </properties>
 
    <build>
@@ -123,9 +120,9 @@
                   </goals>
                   <configuration>
                      <target>
-                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+                        <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
                         <if>
-                            <length string="${booster.project.dir}" trim="true" when="greater" length="0" />
+                            <length length="0" string="${booster.project.dir}" trim="true" when="greater"/>
                             <then>
                                 <copy toDir="${project.build.directory}/generated-project">
                                     <fileset dir="${booster.project.dir}">
@@ -165,7 +162,31 @@
                 </dependency>
             </dependencies>
          </plugin>
-      </plugins>
+      
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>fabric8-maven-plugin</artifactId>
+        <version>3.5.28</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>resource</goal>
+              <goal>build</goal>
+            </goals>
+          </execution>
+        </executions>
+      
+        <configuration>
+          <resources>
+            <labels>
+              <all>
+                <space>jan19</space>
+              </all>
+            </labels>
+          </resources>
+        </configuration>
+      </plugin>
+    </plugins>
    </build>
 
    <profiles>
