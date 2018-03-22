@@ -208,7 +208,7 @@
         </xsl:call-template>
       </xsl:when>
       <!-- MIT -->
-      <xsl:when test="contains(url/text(), 'www.opensource.org/licenses/mit-license') or contains(url/text(), 'www.opensource.org/licenses/MIT') or contains(url/text(), 'jsoup.org/license')">
+      <xsl:when test="contains(url/text(), 'www.opensource.org/licenses/mit-license') or contains(url/text(), 'www.opensource.org/licenses/MIT') or contains(url/text(), 'jsoup.org/license') or contains(url/text(), 'http://opensource.org/licenses/MIT')">
         <xsl:call-template name="license">
           <xsl:with-param name="name" select="$mit_name"/>
           <xsl:with-param name="url" select="$mit_url"/>
@@ -227,7 +227,7 @@
           <xsl:with-param name="url" select="$cddl_url"/>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="contains(url/text(), 'glassfish.java.net/public/CDDL+GPL') or contains(url/text(), 'glassfish.dev.java.net/nonav/public/CDDL+GPL') or contains(url/text(), 'glassfish.dev.java.net/public/CDDL+GPL')">
+      <xsl:when test="contains(url/text(), 'glassfish.java.net/public/CDDL+GPL') or contains(url/text(), 'glassfish.dev.java.net/nonav/public/CDDL+GPL') or contains(url/text(), 'glassfish.dev.java.net/public/CDDL+GPL') or contains(url/text(), 'https://glassfish.dev.java.net/public/CDDLv1.0.html')">
         <xsl:call-template name="license">
           <xsl:with-param name="name" select="$cddl_name"/>
           <xsl:with-param name="url" select="$cddl_url"/>
