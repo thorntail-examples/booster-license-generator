@@ -78,6 +78,7 @@
                      <licensesTemplate>${project.build.directory}/licenses/licenses-project-template.xml</licensesTemplate>
                      <downloadSources>true</downloadSources>
                      <downloadPoms>true</downloadPoms>
+                     <analyzeRuntimeDependencies>true</analyzeRuntimeDependencies>
                      <userSettings>${project.build.directory}/licenses/custom-settings.xml</userSettings>
                      <pomFile>${booster.pom.file}</pomFile>
                      <excludes>
