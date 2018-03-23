@@ -208,13 +208,13 @@
         </xsl:call-template>
       </xsl:when>
       <!-- MIT -->
-      <xsl:when test="contains(url/text(), 'www.opensource.org/licenses/mit-license') or contains(url/text(), 'www.opensource.org/licenses/MIT') or contains(url/text(), 'jsoup.org/license') or contains(url/text(), 'http://opensource.org/licenses/MIT')">
+      <xsl:when test="contains(url/text(), 'www.opensource.org/licenses/mit-license') or contains(url/text(), 'opensource.org/licenses/MIT') or contains(url/text(), 'jsoup.org/license')">
         <xsl:call-template name="license">
           <xsl:with-param name="name" select="$mit_name"/>
           <xsl:with-param name="url" select="$mit_url"/>
         </xsl:call-template>
       </xsl:when>
-      <!-- CDDL -->
+      <!-- CDDL and GNU -->
       <xsl:when test="contains(name/text(), 'CDDL/GPLv2+CE')">
         <xsl:call-template name="license">
           <xsl:with-param name="name" select="$cddl_name"/>
@@ -227,10 +227,17 @@
           <xsl:with-param name="url" select="$cddl_url"/>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="contains(url/text(), 'glassfish.java.net/public/CDDL+GPL') or contains(url/text(), 'glassfish.dev.java.net/nonav/public/CDDL+GPL') or contains(url/text(), 'glassfish.dev.java.net/public/CDDL+GPL') or contains(url/text(), 'https://glassfish.dev.java.net/public/CDDLv1.0.html')">
+      <xsl:when test="contains(url/text(), 'glassfish.java.net/public/CDDL+GPL') or contains(url/text(), 'glassfish.dev.java.net/nonav/public/CDDL+GPL') or contains(url/text(), 'glassfish.dev.java.net/public/CDDL+GPL')">
         <xsl:call-template name="license">
           <xsl:with-param name="name" select="$cddl_name"/>
           <xsl:with-param name="url" select="$cddl_url"/>
+        </xsl:call-template>
+      </xsl:when>
+      <!-- CDDL -->
+      <xsl:when test="contains(url/text(), 'https://glassfish.dev.java.net/public/CDDLv1.0.html')">
+        <xsl:call-template name="license">
+          <xsl:with-param name="name" select="$cddl10_name"/>
+          <xsl:with-param name="url" select="$cddl10_url"/>
         </xsl:call-template>
       </xsl:when>
       <!-- CCA -->
