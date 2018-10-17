@@ -312,6 +312,13 @@
           <xsl:with-param name="url" select="$lgpl_v30_url"/>
         </xsl:call-template>
       </xsl:when>
+      <!-- jaxb-api -->
+      <xsl:when test="ancestor::dependency/groupId/text() = 'javax.xml.bind' and (ancestor::dependency/artifactId/text() = 'jaxb-api' or ancestor::dependency/artifactId/text() = 'jaxb-api-parent')">
+        <xsl:call-template name="license">
+          <xsl:with-param name="name" select="'Dual license consisting of the CDDL v1.1 and GPL v2'"/>
+          <xsl:with-param name="url" select="'https://oss.oracle.com/licenses/CDDL+GPL-1.1'"/>
+        </xsl:call-template>
+      </xsl:when>
 
       <!-- If nothing matches, leave original values -->
       <xsl:otherwise>
