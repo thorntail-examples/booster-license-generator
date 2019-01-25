@@ -19,6 +19,9 @@
   <xsl:variable name="lgpl_v30_name" select="'GNU Lesser General Public License, Version 3'"/>
   <xsl:variable name="lgpl_v30_url" select="'http://www.gnu.org/licenses/lgpl-3.0-standalone.html'"/>
 
+  <xsl:variable name="lgpl_v30_or_later_name" select="'GNU Lesser General Public License v3.0 or later'"/>
+  <xsl:variable name="lgpl_v30_or_later_url" select="'https://spdx.org/licenses/LGPL-3.0+.html'"/>
+
   <xsl:variable name="bsd_name" select="'The BSD License'"/>
   <xsl:variable name="bsd_url" select="'http://repository.jboss.org/licenses/bsd.txt'"/>
 
@@ -42,6 +45,9 @@
 
   <xsl:variable name="cca_name" select="'Creative Commons Attribution 2.5'"/>
   <xsl:variable name="cca_url" select="'http://creativecommons.org/licenses/by/2.5/'"/>
+
+  <xsl:variable name="cc0_name" select="'Creative Commons Zero v1.0 Universal'"/>
+  <xsl:variable name="cc0_url" select="'http://creativecommons.org/publicdomain/zero/1.0/legalcode'"/>
 
   <xsl:variable name="cpl_name" select="'Common Public License'"/>
   <xsl:variable name="cpl_url" select="'http://www.opensource.org/licenses/cpl1.0.txt'"/>
@@ -194,6 +200,12 @@
           <xsl:with-param name="url" select="$lgpl_v30_url"/>
         </xsl:call-template>
       </xsl:when>
+      <xsl:when test="contains(name/text(), 'LGPLv3 or later')">
+        <xsl:call-template name="license">
+          <xsl:with-param name="name" select="$lgpl_v30_or_later_name"/>
+          <xsl:with-param name="url" select="$lgpl_v30_or_later_url"/>
+        </xsl:call-template>
+      </xsl:when>
       <!-- BSD -->
       <xsl:when test="contains(name/text(), 'BSD')">
         <xsl:call-template name="license">
@@ -245,6 +257,13 @@
         <xsl:call-template name="license">
           <xsl:with-param name="name" select="$cca_name"/>
           <xsl:with-param name="url" select="$cca_url"/>
+        </xsl:call-template>
+      </xsl:when>
+      <!-- CC0 -->
+      <xsl:when test="contains(url/text(), 'creativecommons.org/publicdomain/zero/1.0')">
+        <xsl:call-template name="license">
+          <xsl:with-param name="name" select="$cc0_name"/>
+          <xsl:with-param name="url" select="$cc0_url"/>
         </xsl:call-template>
       </xsl:when>
       <!-- CPL -->
