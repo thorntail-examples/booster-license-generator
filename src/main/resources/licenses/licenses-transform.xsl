@@ -61,7 +61,7 @@
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="licenses">fcc
+  <xsl:template match="licenses">
     <xsl:choose>
       <xsl:when test="contains(comment(), 'No license information available.')">
         <xsl:choose>
