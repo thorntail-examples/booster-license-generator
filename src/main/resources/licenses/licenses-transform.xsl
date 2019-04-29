@@ -55,6 +55,9 @@
   <xsl:variable name="mpl_v11_name" select="'Mozilla Public License 1.1'"/>
   <xsl:variable name="mpl_v11_url" select="'http://www.mozilla.org/MPL/MPL-1.1.html'"/>
 
+  <xsl:variable name="mpl_v20_name" select="'Mozilla Public License 2.0'"/>
+  <xsl:variable name="mpl_v20_url" select="'http://www.mozilla.org/MPL/2.0/'"/>
+
   <xsl:template match="@*|node()">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()"/>
@@ -336,6 +339,17 @@
         <xsl:call-template name="license">
           <xsl:with-param name="name" select="'Dual license consisting of the CDDL v1.1 and GPL v2'"/>
           <xsl:with-param name="url" select="'https://oss.oracle.com/licenses/CDDL+GPL-1.1'"/>
+        </xsl:call-template>
+      </xsl:when>
+      <!-- h2 -->
+      <xsl:when test="ancestor::dependency/groupId/text() = 'com.h2database' and ancestor::dependency/artifactId/text() = 'h2'">
+        <xsl:call-template name="license">
+          <xsl:with-param name="name" select="$mpl_v20_name"/>
+          <xsl:with-param name="url" select="$mpl_v20_url"/>
+        </xsl:call-template>
+        <xsl:call-template name="license">
+          <xsl:with-param name="name" select="$epl_v1_name"/>
+          <xsl:with-param name="url" select="$epl_v1_url"/>
         </xsl:call-template>
       </xsl:when>
 
