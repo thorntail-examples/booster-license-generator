@@ -1,60 +1,60 @@
-# WildFly Swarm Booster License Generator
+# Thorntail Booster License Generator
 
 Example usage:
 
-````bash
-$ mvn clean package -Dbooster.pom.file=/path/to/wfswarm-rest-http/pom-redhat.xml -Dbooster.name="WildFly Swarm Booster - REST API Level 0 Mission" -Dbooster.version=7.0.0-redhat-3 -Dbooster.assembly.name=wfswarm-rest-http -Dbooster.product.build=rest-http
-````
-
-## booster.pom.file
-
-Path to the booster `pom.xml`, e.g.:
-
-````bash
--Dbooster.pom.file=/path/to/wfswarm-rest-http/pom-redhat.xml
-````
-
-NOTE: The pom file is always copied to `target/generated-project/pom.xml`.
+```bash
+$ mvn clean package -Dbooster.project.dir=/path/to/thorntail-rest-http -Dbooster.name="Thorntail - REST API Level 0" -Dbooster.version=2.4.0-redhat-1 -Dbooster.assembly.name=thorntail-rest-http -Dbooster.product.build=true
+```
 
 ## booster.project.dir
 
 Path to the booster project directory, e.g.:
 
-````bash
--Dbooster.project.dir=/path/to/wfswarm-rest-http-secured
-````
+```bash
+-Dbooster.project.dir=/path/to/thorntail-rest-http
+```
 
-NOTE 1: The dir content is copied to `target/generated-project`. `src/test/` and `target` subdirs are skipped.
-
-NOTE 2: If specified, `booster.pom.file` property is ignored.
+NOTE: The dir content is copied to `target/generated-project`. `src/test/` and `target` subdirs are skipped.
 
 ## booster.name
 
 The name used in licenses.html report, e.g.:
 
-````bash
--Dbooster.name="WildFly Swarm Booster - REST API Level 0 Mission"
-````
+```bash
+-Dbooster.name="Thorntail - REST API Level 0"
+```
 
 ## booster.version
 
 The version used in licenses.html report, e.g.:
 
-````bash
--Dbooster.version=7.0.0-redhat-3
-````
+```bash
+-Dbooster.version=2.4.0-redhat-1
+```
 
 ## booster.assembly.name
 
 The name of the generated archive, e.g.:
 
-````bash
--Dbooster.assembly.name=wfswarm-rest-http
-````
+```bash
+-Dbooster.assembly.name=thorntail-rest-http
+```
 
-results in `target/wfswarm-rest-http-licenses.zip`.
+results in `target/thorntail-rest-http-licenses.zip`.
+
+## booster.product.build
+
+Boolean indicating whether this is a product variant of the booster or not, e.g.:
+
+```bash
+-Dbooster.product.build=true
+```
 
 ## booster.repo.url
 
 Additional repo used in `custom-settings.xml`.
-https://repository.jboss.org/nexus/content/groups/public by default , https://maven.repository.redhat.com/ga/ for product builds (activated by `-Dbooster.product.build`).
+
+Typically doesn't have to be set, as the correct value is inferred from `booster.product.build`:
+
+- https://repository.jboss.org/nexus/content/groups/public if `booster.product.build` is not set, or is set to `false`
+- https://maven.repository.redhat.com/ga/ when `booster.product.build` is set to `true`
