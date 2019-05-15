@@ -1,183 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ~ ~ Copyright 2016-2017 Red Hat, Inc, and individual contributors. ~
-   ~ Licensed under the Apache License, Version 2.0 (the "License"); ~ you may
-   not use this file except in compliance with the License. ~ You may obtain
-   a copy of the License at ~ ~ http://www.apache.org/licenses/LICENSE-2.0 ~
-   ~ Unless required by applicable law or agreed to in writing, software ~ distributed
-   under the License is distributed on an "AS IS" BASIS, ~ WITHOUT WARRANTIES
-   OR CONDITIONS OF ANY KIND, either express or implied. ~ See the License for
-   the specific language governing permissions and ~ limitations under the License.
-   ~ -->
+<!--
+  ~
+  ~  Copyright 2019 Red Hat, Inc, and individual contributors.
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~  http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  ~
+  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
    <groupId>io.thorntail</groupId>
-   <artifactId>thorntail-booster-license-generator</artifactId>
-   <version>0.0.1-SNAPSHOT</version>
-   <packaging>pom</packaging>
+   <artifactId>thorntail-examples-license-generator</artifactId>
+   <version>0.1.0-SNAPSHOT</version>
 
-   <name>Thorntail Booster License Generator</name>
+   <name>Thorntail Examples License Generator</name>
 
    <properties>
+      <maven.compiler.source>1.8</maven.compiler.source>
+      <maven.compiler.target>1.8</maven.compiler.target>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <!-- Plugin versions -->
-      <version.wildfly-swarm-fraction-plugin>65</version.wildfly-swarm-fraction-plugin>
-      <version.xml-maven-plugin>1.0.2</version.xml-maven-plugin>
-      <version.license-maven-plugin>1.13</version.license-maven-plugin>
-      <version.antrun-plugin>1.8</version.antrun-plugin>
-      <version.maven-resources-plugin>3.1.0</version.maven-resources-plugin>
-      <version.wildfly-licenses-plugin>2.0.0.Final</version.wildfly-licenses-plugin>
-      <version.assembly-plugin>3.1.1</version.assembly-plugin>
-      <!-- Build configuration -->
-      <booster.project.dir></booster.project.dir>
-      <booster.name>Thorntail Booster</booster.name>
-      <booster.version>1</booster.version>
-      <booster.assembly.name>thorntail-booster-licenses</booster.assembly.name>
-      <booster.repo.url>https://repository.jboss.org/nexus/content/groups/public</booster.repo.url>
+      <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+      <version.me.snowdrop.licenses-generator>1.0.5</version.me.snowdrop.licenses-generator>
+      <version.org.apache.maven.shared.maven-invoker>3.0.1</version.org.apache.maven.shared.maven-invoker>
+      <version.org.codehaus.mojo.exec-maven-plugin>1.6.0</version.org.codehaus.mojo.exec-maven-plugin>
+      <version.org.jboss.shrinkwrap>1.2.6</version.org.jboss.shrinkwrap>
    </properties>
+
+   <dependencies>
+      <dependency>
+         <groupId>me.snowdrop</groupId>
+         <artifactId>licenses-generator</artifactId>
+         <version>${version.me.snowdrop.licenses-generator}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.maven.shared</groupId>
+         <artifactId>maven-invoker</artifactId>
+         <version>${version.org.apache.maven.shared.maven-invoker}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.jboss.shrinkwrap</groupId>
+         <artifactId>shrinkwrap-api</artifactId>
+         <version>${version.org.jboss.shrinkwrap}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.jboss.shrinkwrap</groupId>
+         <artifactId>shrinkwrap-spi</artifactId>
+         <version>${version.org.jboss.shrinkwrap}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.jboss.shrinkwrap</groupId>
+         <artifactId>shrinkwrap-impl-base</artifactId>
+         <version>${version.org.jboss.shrinkwrap}</version>
+      </dependency>
+   </dependencies>
 
    <build>
       <plugins>
          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-resources-plugin</artifactId>
-            <version>${version.maven-resources-plugin}</version>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>${version.org.codehaus.mojo.exec-maven-plugin}</version>
             <executions>
                <execution>
-                  <id>prepare-template</id>
-                  <phase>process-resources</phase>
-                  <goals>
-                     <goal>copy-resources</goal>
-                  </goals>
-                  <inherited>false</inherited>
-                  <configuration>
-                     <outputDirectory>${basedir}/target</outputDirectory>
-                     <resources>
-                        <resource>
-                           <directory>src/main/resources</directory>
-                           <filtering>true</filtering>
-                        </resource>
-                     </resources>
-                     <escapeString>\</escapeString>
-                  </configuration>
-               </execution>
-            </executions>
-         </plugin>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <version>${version.antrun-plugin}</version>
-            <executions>
-               <execution>
-                  <id>copy-additional-resources</id>
-                  <phase>process-resources</phase>
-                  <goals>
-                     <goal>run</goal>
-                  </goals>
-                  <configuration>
-                     <target>
-                        <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
-                        <if>
-                           <length string="${booster.project.dir}" trim="true" when="greater" length="0" />
-                           <then>
-                              <copy toDir="${project.build.directory}/generated-project">
-                                 <fileset dir="${booster.project.dir}">
-                                    <exclude name="src/test/"/>
-                                    <exclude name="target/"/>
-                                 </fileset>
-                              </copy>
-                           </then>
-                        </if>
-                     </target>
-                  </configuration>
-               </execution>
-               <execution>
-                  <id>log-info</id>
+                  <id>run</id>
                   <phase>package</phase>
                   <goals>
-                     <goal>run</goal>
+                     <goal>exec</goal>
                   </goals>
                   <configuration>
-                     <tasks>
-                        <echo>=========================================================================${line.separator}Thorntail Booster Licenses Generator${line.separator}booster.project.dir:   ${booster.project.dir}${line.separator}booster.name:          ${booster.name}${line.separator}booster.version:       ${booster.version}${line.separator}booster.assembly.name: ${booster.assembly.name}${line.separator}booster.product.build: ${booster.product.build}${line.separator}booster.repo.url:      ${booster.repo.url}${line.separator}${line.separator}Zip archive:           ${project.build.directory}/${booster.assembly.name}.zip${line.separator}License files:         ${project.build.directory}/license-project/target/licenses${line.separator}=========================================================================</echo>
-                     </tasks>
-                  </configuration>
-               </execution>
-            </executions>
-            <dependencies>
-               <dependency>
-                  <groupId>ant-contrib</groupId>
-                  <artifactId>ant-contrib</artifactId>
-                  <version>1.0b3</version>
-                  <exclusions>
-                     <exclusion>
-                        <groupId>ant</groupId>
-                        <artifactId>ant</artifactId>
-                     </exclusion>
-                  </exclusions>
-               </dependency>
-            </dependencies>
-         </plugin>
-         <plugin>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>wildfly-swarm-fraction-plugin</artifactId>
-            <version>${version.wildfly-swarm-fraction-plugin}</version>
-            <executions>
-               <execution>
-                  <id>generate-licenses</id>
-                  <phase>prepare-package</phase>
-                  <goals>
-                     <goal>generate-licenses</goal>
-                  </goals>
-                  <configuration>
-                     <licensesTemplate>${project.build.directory}/licenses/licenses-project-template.xml</licensesTemplate>
-                     <downloadPoms>true</downloadPoms>
-                     <analyzeRuntimeDependencies>true</analyzeRuntimeDependencies>
-                     <userSettings>${project.build.directory}/licenses/custom-settings.xml</userSettings>
-                     <excludes>
-                        <exclude>org/codehaus/plexus/plexus/1.0.4/.*</exclude>
-                     </excludes>
-                  </configuration>
-               </execution>
-            </executions>
-         </plugin>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <version>${version.assembly-plugin}</version>
-            <executions>
-               <execution>
-                  <id>assemble</id>
-                  <phase>package</phase>
-                  <goals>
-                     <goal>single</goal>
-                  </goals>
-                  <configuration>
-                     <finalName>${booster.assembly.name}</finalName>
-                     <descriptors>
-                        <descriptor>src/assembly/assembly.xml</descriptor>
-                     </descriptors>
-                     <tarLongFileMode>gnu</tarLongFileMode>
+                     <executable>java</executable>
+                     <arguments>
+                        <argument>-Djava.util.logging.config.file=target/classes/logging.properties</argument>
+                        <argument>-Dexample.project.dir=${example.project.dir}</argument>
+                        <argument>-Dexternal.license.service=${external.license.service}</argument>
+                        <argument>-cp</argument>
+                        <classpath/>
+                        <argument>io.thorntail.examples.license.generator.Main</argument>
+                     </arguments>
                   </configuration>
                </execution>
             </executions>
          </plugin>
       </plugins>
    </build>
-
-   <profiles>
-      <profile>
-         <id>product-booster</id>
-         <activation>
-            <property>
-               <name>booster.product.build</name>
-               <value>true</value>
-            </property>
-         </activation>
-         <properties>
-            <booster.repo.url>https://maven.repository.redhat.com/ga/</booster.repo.url>
-         </properties>
-      </profile>
-   </profiles>
-
 </project>
