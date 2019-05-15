@@ -1,60 +1,35 @@
-# Thorntail Booster License Generator
+# Thorntail Examples License Generator
 
 Example usage:
 
 ```bash
-$ mvn clean package -Dbooster.project.dir=/path/to/thorntail-rest-http -Dbooster.name="Thorntail - REST API Level 0" -Dbooster.version=2.4.0-redhat-1 -Dbooster.assembly.name=thorntail-rest-http -Dbooster.product.build=true
+$ mvn clean package -Dexample.project.dir=/path/to/thorntail-rest-http
 ```
 
-## booster.project.dir
+## `example.project.dir`
 
-Path to the booster project directory, e.g.:
+Path to the example project directory, e.g.:
 
 ```bash
--Dbooster.project.dir=/path/to/thorntail-rest-http
+-Dexample.project.dir=/path/to/thorntail-rest-http
 ```
 
-NOTE: The dir content is copied to `target/generated-project`. `src/test/` and `target` subdirs are skipped.
+## `external.license.service` (optional)
 
-## booster.name
-
-The name used in licenses.html report, e.g.:
+URL of an external license service that can provide license information.
+If not set, no external license service is used.
 
 ```bash
--Dbooster.name="Thorntail - REST API Level 0"
+-Dexternal.license.service=http://.../find-license-check-record-and-license-info
 ```
 
-## booster.version
+## Community and product variants of the example
 
-The version used in licenses.html report, e.g.:
+The license generator will automatically determine whether the example is a product variant or not, based on the project directory name.
+If the directory name ends with `-redhat`, it's considered product variant, otherwise community.
+This information is used for selecting which Maven repository should be used (JBoss.org Maven repo or Red Hat Maven repo).
 
-```bash
--Dbooster.version=2.4.0-redhat-1
-```
+## Snowdrop license generator
 
-## booster.assembly.name
-
-The name of the generated archive, e.g.:
-
-```bash
--Dbooster.assembly.name=thorntail-rest-http
-```
-
-results in `target/thorntail-rest-http-licenses.zip`.
-
-## booster.product.build
-
-Boolean indicating whether this is a product variant of the booster or not, e.g.:
-
-```bash
--Dbooster.product.build=true
-```
-
-## booster.repo.url
-
-Additional repo used in `custom-settings.xml`.
-
-Typically doesn't have to be set, as the correct value is inferred from `booster.product.build`:
-
-- https://repository.jboss.org/nexus/content/groups/public if `booster.product.build` is not set, or is set to `false`
-- https://maven.repository.redhat.com/ga/ when `booster.product.build` is set to `true`
+This project uses the awesome [Snowdrop license generator](https://github.com/snowdrop/licenses-generator).
+Be sure to check it out!

@@ -1,0 +1,72 @@
+[
+  {
+    "groupId": "com.h2database",
+    "artifactId": "h2",
+    "version-range": "[1.4.196,)",
+    "licenses": [
+      {
+        "name": "Eclipse Public License, Version 1.0",
+        "url": "http://repository.jboss.org/licenses/epl-1.0.txt"
+      },
+      {
+        "name": "Mozilla Public License 2.0",
+        "url": "https://www.mozilla.org/en-US/MPL/2.0/"
+      }
+    ]
+  },
+  {
+    "groupId": "com.jcraft",
+    "artifactId": "jsch",
+    "version": "0.1.54",
+    "licenses": [
+      {
+        "name": "BSD 3-Clause \"New\" or \"Revised\" License",
+        "url": "https://opensource.org/licenses/BSD-3-Clause"
+      }
+    ]
+  },
+  {
+    "groupId": "com.jcraft",
+    "artifactId": "jzlib",
+    "version": "1.1.1",
+    "licenses": [
+      {
+        "name": "BSD 3-Clause \"New\" or \"Revised\" License",
+        "url": "https://opensource.org/licenses/BSD-3-Clause"
+      }
+    ]
+  },
+  {
+    "groupId": "io.undertow.jastow",
+    "artifactId": "jastow",
+    "version-regexp": ".*",
+    "licenses": [
+      {
+        "name": "Apache License 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ]
+  },
+  {
+    "groupId": "jaxen",
+    "artifactId": "jaxen",
+    "version": "1.1.6",
+    "licenses": [
+      {
+        "name": "BSD 3-Clause \"New\" or \"Revised\" License",
+        "url": "https://opensource.org/licenses/BSD-3-Clause"
+      }
+    ]
+  },
+  {
+    "groupId": "org.eclipse.jgit",
+    "artifactId": "org.eclipse.jgit",
+    "version": "5.0.2.201807311906-r",
+    "licenses": [
+      {
+        "name": "Eclipse Distribution License, Version 1.0",
+        "url": "http://repository.jboss.org/licenses/edl-1.0.txt"
+      }
+    ]
+  }
+]
