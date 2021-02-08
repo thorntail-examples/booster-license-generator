@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -60,10 +61,10 @@ public class Main {
 
     private static Set<Gav> findAllArtifactsInAllThorntailUberjars(Path projectDir) throws IOException {
         try (Stream<Path> dir = Files.walk(projectDir)) {
-            return dir.filter(p -> Files.isRegularFile(p))
+            return dir.filter(Files::isRegularFile)
                     .filter(p -> p.toString().endsWith("-thorntail.jar"))
                     .flatMap(Main::findAllArtifactsInThorntailUberjar)
-                    .collect(Collectors.toSet());
+                    .collect(Collectors.toCollection(HashSet::new));
         }
     }
 
